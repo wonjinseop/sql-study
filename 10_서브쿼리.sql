@@ -158,8 +158,7 @@ ORDER BY 사원수 DESC;
 -- ROWNUM이 정렬이 되지 않는 상황이 발생합니다.
 -- 이유: ROWNUM이 먼저 붙고 정렬이 진행되기 때문. ORDER BY는 항상 마지막에 진행.
 -- 해결: 정렬이 미리 진행된 자료에 ROWNUM을 붙여서 다시 조회하는 것이 좋을 것 같아요.
-SELECT
-    employee_id, first_name, salary, ROWNUM AS rn
+SELECT employee_id, first_name, salary, ROWNUM AS rn
 FROM employees
 ORDER BY salary DESC;
 
@@ -167,12 +166,10 @@ ORDER BY salary DESC;
 -- 범위 지정도 불가능하고, 지목할 수 없는 문제가 발생하더라.
 -- 이유: WHERE절부터 먼저 실행하고 나서 ROWNUM이 SELECT 되기 때문에.
 -- 해결: ROWNUM까지 붙여 놓고 다시 한 번 자료를 SELECT 해서 범위를 지정해야 되겠구나.
-SELECT
-ROWNUM AS rn, tbl.*
+SELECT ROWNUM AS rn, tbl.*
 FROM
     (
-    SELECT
-        employee_id, first_name, salary
+    SELECT employee_id, first_name, salary
     FROM employees
     ORDER BY salary DESC
     ) tbl
@@ -193,8 +190,7 @@ FROM
         ROWNUM AS rn, tbl.*
     FROM
         (
-        SELECT
-            employee_id, first_name, salary
+        SELECT employee_id, first_name, salary
         FROM employees
         ORDER BY salary DESC
         ) tbl
@@ -204,14 +200,11 @@ WHERE rn BETWEEN 21 AND 30;
 SELECT 
     e.employee_id, e.salary,
     avg_salaries.average_salary
-FROM 
-    employees e
+FROM employees e
 JOIN
-    (SELECT
-        department_id,
+    (SELECT department_id,
         AVG(salary) AS average_salary 
-    FROM
-        employees
+    FROM employees
     GROUP BY department_id) avg_salaries
 ON e.department_id = avg_salaries.department_id;
 
