@@ -124,7 +124,7 @@ WITH CHECK OPTION CONSTRAINT view_emp_test_ck;
 SELECT * FROM view_emp_test;
 DROP VIEW view_emp_test;
 
-UPDATE INTO view_emp_test
+UPDATE view_emp_test
 SET department_id = 100
 WHERE employee_id = 107;
 
