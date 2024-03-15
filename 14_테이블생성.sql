@@ -22,9 +22,42 @@ SELECT * FROM dept2;
 
 -- NUMBER와 VARCHAR2 타입의 길이를 확인
 INSERT INTO dept2
-VALUES(30, '경영지원', '경기도', sysdate, 2000000000);
+VALUES(30, '경영지원', '경기', sysdate, 2000000000);
 
+-- 컬럼 추가
+ALTER TABLE dept2
+ADD dept_count NUMBER(3);
 
+-- 컬럼명 변경
+ALTER TABLE dept2
+RENAME COLUMN dept_count TO emp_count;
+
+-- 컬럼 속성 수정
+-- 만약 변경하고자 하는 컬럼에 데이터가 이미 존재한다면, 그에 맞는 타입으로
+-- 변경해 주셔야 합니다. 맞지 않는 타입으로는 변경이 불가능합니다.
+ALTER TABLE dept2
+MODIFY emp_count VARCHAR2(10);
+
+-- DDL(CREATE, ALTER, TRUNCATE, DROP)은 트랜잭션의 대상이 아닙니다.
+ROLLBACK;
+
+-- 컬럼 삭제
+ALTER TABLE dept2
+DROP COLUMN dept_bonus;
+
+SELECT * FROM dept3;
+
+-- 테이블 이름 변경
+ALTER TABLE dept2
+RENAME TO dept3;
+
+-- 테이블 삭제 (구조는 남겨두고 내부 데이터만 모두 삭제)
+TRUNCATE TABLE dept3;
+
+-- 테이블 삭제
+DROP TABLE dept3;
+
+ROLLBACK;
 
 
 
